@@ -27,6 +27,8 @@ namespace Sophia::HAL {
 
         I2SMode mode = I2SMode::Receiver;
 
+        size_t dmaBufferLength = 512;
+
         I2SPins pins;
 
     };

@@ -1,12 +1,12 @@
 #include <Arduino.h>
-#include "GPIO.h"
+#include <GPIOESP32.h>
 #include "GPIOConfig.h"
 #include "UART.h"
 #include "I2S/I2SESP32.h"
 
 using namespace Sophia::HAL;
 using namespace Sophia::Config;
-
+Sophia::Platform::ArduinoESP32::GPIOESP32 gpio;
 I2SESP32 i2s;
 
 
@@ -16,7 +16,7 @@ void setup() {
 
   UART::println("Sophia Embedded Boot");
 
-  GPIO::output(GPIOConfig::StatusLED);
+  gpio.output(GPIOConfig::StatusLED);
 
   I2SConfig config;
   
@@ -36,7 +36,7 @@ void setup() {
 
 void loop() {
 
-  GPIO::toggle(GPIOConfig::StatusLED);
+  gpio.toggle(GPIOConfig::StatusLED);
   UART::println("Sophia Capture Audio Heartbeat");
   delay(1000); 
 }
