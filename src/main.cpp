@@ -1,125 +1,53 @@
 #include <Arduino.h>
-#include <GPIOESP32.h>
+
 #include "GPIOConfig.h"
-#include "UART.h"
+#include "HardwareFactory.h"
 #include "I2S/I2SESP32.h"
+#include "UART.h"
 
-using namespace Sophia::HAL;
-using namespace Sophia::Config;
-Sophia::Platform::ArduinoESP32::GPIOESP32 gpio;
-I2SESP32 i2s;
+namespace {
 
+Sophia::HAL::GPIO& gpio =
+    Sophia::Runtime::HardwareFactory::gpio();
+
+Sophia::HAL::I2SESP32 i2s;
+
+}
 
 void setup() {
-  Serial.begin(115200);
-  delay(2000);
+    Serial.begin(115200);
+    delay(2000);
 
-  UART::println("Sophia Embedded Boot");
+    Sophia::HAL::UART::println("Sophia Embedded Boot");
 
-  gpio.output(GPIOConfig::StatusLED);
+    gpio.output(
+        Sophia::Config::GPIOConfig::StatusLED
+    );
 
-  I2SConfig config;
-  
-  config.sampleRate =16000;
+    Sophia::HAL::I2SConfig config;
+    config.sampleRate = 16000;
 
-  auto result = i2s.begin(config);
+    const auto result = i2s.begin(config);
 
-  if ( result == I2SError::None ) {
-    UART::println("I2S Initialized Successfully");
-
-  } else {
-    UART::println("Failed to initialize I2S");
-  }
-
+    if (result == Sophia::HAL::I2SError::None) {
+        Sophia::HAL::UART::println(
+            "I2S Initialized Successfully"
+        );
+    } else {
+        Sophia::HAL::UART::println(
+            "Failed to initialize I2S"
+        );
+    }
 }
-
 
 void loop() {
+    gpio.toggle(
+        Sophia::Config::GPIOConfig::StatusLED
+    );
 
-  gpio.toggle(GPIOConfig::StatusLED);
-  UART::println("Sophia Capture Audio Heartbeat");
-  delay(1000); 
+    Sophia::HAL::UART::println(
+        "Sophia Capture Audio Heartbeat"
+    );
+
+    delay(1000);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
