@@ -2,23 +2,29 @@
 
 #include "I2S.h"
 
-namespace Sophia::HAL {
+namespace Sophia::Platform::ArduinoESP32 {
 
-    class I2SESP32 final : public I2S {
-        public:
+class I2SESP32 final : public Sophia::HAL::I2S {
 
-            I2SESP32() = default;
-            ~I2SESP32() override = default;
+public:
 
-            I2SError begin(const I2SConfig& config) override;
+    I2SESP32() = default;
+    ~I2SESP32() override = default;
 
-            void end() override;
+    Sophia::HAL::I2SError begin(
+        const Sophia::HAL::I2SConfig& config
+    ) override;
 
-            size_t read(int32_t* buffer, size_t samples) override;
+    void end() override;
 
-        private:
+    size_t read(
+        int16_t* buffer,
+        size_t samples
+    ) override;
 
-            bool initialized = false;
-            
-    };
+private:
+
+    bool initialized = false;
+};
+
 }

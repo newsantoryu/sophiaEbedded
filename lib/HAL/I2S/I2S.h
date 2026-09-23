@@ -1,3 +1,5 @@
+#pragma once
+
 #include <stddef.h>
 #include <stdint.h>
 
@@ -15,6 +17,6 @@ namespace Sophia::HAL {
 
             virtual void end() = 0;
 
-            virtual size_t read(int32_t* buffer, size_t samples) = 0;
+            virtual size_t read(int16_t* buffer, size_t samples) = 0;
     };
 }

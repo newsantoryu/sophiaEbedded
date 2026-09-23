@@ -1,14 +1,16 @@
 #pragma once
 
 #include <GPIO.h>
-#include <GPIOESP32.h>
+#include <I2S/I2S.h>
 
 namespace Sophia::Runtime {
 
     class HardwareFactory final {
 
-        public:
+    public:
 
         static Sophia::HAL::GPIO& gpio();
+
+        static Sophia::HAL::I2S& i2s();
     };
 }
